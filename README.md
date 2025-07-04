@@ -121,6 +121,7 @@ ON e.department_id = d.id;`
 *Tips*: Use `GROUP BY`, `COUNT()`.
 
 `SELECT COUNT(name),department_id  FROM employees GROUP BY department_id ORDER BY DESC;`
+
 ---
 
 ### ✅ Filtering with WHERE
