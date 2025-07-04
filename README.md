@@ -120,7 +120,14 @@ ON e.department_id = d.id;`
 5️⃣ **Question**: Count how many employees work in each department.
 *Tips*: Use `GROUP BY`, `COUNT()`.
 
-`SELECT COUNT(name),department_id  FROM employees GROUP BY department_id ORDER BY DESC;`
+`SELECT COUNT(name),department_id  FROM employees GROUP BY department_id ORDER BY department_id DESC;`
+
+**Smart version:**
+`SELECT d.name, COUNT(e.id) AS employee_count
+FROM employees e
+JOIN departments d ON e.department_id = d.id
+GROUP BY d.name
+ORDER BY d.name DESC;`
 
 ---
 
