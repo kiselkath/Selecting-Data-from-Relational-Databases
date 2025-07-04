@@ -276,14 +276,50 @@ HAVING SUM(e.salary) > 150000;`
 2️⃣2️⃣ **Question**: Find employees earning above the overall average salary.
 *Tips*: Use subquery in `WHERE`.
 
+`SELECT id, name, salary
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees
+);`
+
+
 2️⃣3️⃣ **Question**: List employees earning above their department’s average salary.
 *Tips*: Use correlated subquery.
+
+`SELECT e.id, e.name, e.salary
+FROM employees e
+WHERE salary > (
+    SELECT AVG(e2.salary)
+    FROM employees e2
+    WHERE e2.department_id = e.department_id
+);`
+
 
 2️⃣4️⃣ **Question**: Find departments with at least one employee earning over 80,000.
 *Tips*: Use `EXISTS` or `IN`.
 
+`SELECT d.id, d.name AS department_name
+FROM departments d
+WHERE EXISTS (
+SELECT 1
+FROM employees e
+WHERE e.department_id = d.id
+AND e.salary > 80000
+);`
+
 2️⃣5️⃣ **Question**: Get the top earner in each department.
 *Tips*: Use subquery with `MAX()` or window functions.
+
+`SELECT e.id, e.name, e.salary, d.name AS department_name
+FROM employees e
+JOIN departments d ON e.department_id = d.id
+WHERE (e.department_id, e.salary) IN (
+    SELECT department_id, MAX(salary)
+    FROM employees
+    GROUP BY department_id
+);`
+
 
 ---
 
@@ -327,10 +363,10 @@ HAVING SUM(e.salary) > 150000;`
 3️⃣5️⃣ **Question**: List all employees with their department names using a JOIN.
 *Tips*: Use `INNER JOIN`.
 
-SELECT e.name, d.name AS department_name
+`SELECT e.name, d.name AS department_name
 FROM employees e 
 INNER JOIN departments d 
-ON e.department_id = d.id;
+ON e.department_id = d.id;`
 
 3️⃣6️⃣ **Question**: Show all salary records with the corresponding employee names.
 *Tips*: Use `JOIN`.
@@ -352,7 +388,7 @@ ORDER BY s.effective_date DESC;`
 3️⃣8️⃣ **Question**: List all employees along with department name and their salary history.
 *Tips*: Multiple `JOIN`s.
 
-SELECT 
+`SELECT 
     e.id AS employee_id,
     e.name,
     d.name AS department_name,
@@ -360,7 +396,7 @@ SELECT
     s.amount AS salary_amount
 FROM employees e 
 JOIN salaries s ON e.department_id = s.employee_id
-JOIN departments d ON e.department_id = d.id;
+JOIN departments d ON e.department_id = d.id;`
 
 ---
 
