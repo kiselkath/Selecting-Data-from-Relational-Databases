@@ -242,18 +242,31 @@ GROUP BY d.name;`
 1️⃣9️⃣ **Question**: List departments that have more than 2 employees.
 *Tips*: Use `GROUP BY`, `HAVING COUNT()`.
 
-SELECT COUNT(e.id) AS employee_count, d.name AS department_name
+`SELECT d.name AS department_name, COUNT(e.id) AS employee_count
 FROM employees e
 JOIN departments d
 ON e.department_id = d.id
 GROUP BY department_name
-HAVING COUNT(e.id) > 2;
+HAVING COUNT(e.id) > 2;`
 
 2️⃣0️⃣ **Question**: Show departments with an average salary above 60,000.
 *Tips*: Use `GROUP BY`, `HAVING AVG()`.
 
+`SELECT d.name AS department_name, AVG(e.salary) AS average_salary
+FROM employees e
+JOIN departments d ON e.department_id = d.id
+GROUP BY d.name
+HAVING AVG(e.salary) > 60000;`
+
+
 2️⃣1️⃣ **Question**: Find departments with a total salary cost greater than 150,000.
 *Tips*: Use `GROUP BY`, `HAVING SUM()`.
+
+`SELECT d.name AS department_name, SUM(e.salary) AS department_budget
+FROM employees e
+JOIN departments d ON e.department_id = d.id
+GROUP BY d.name
+HAVING SUM(e.salary) > 150000;`
 
 ---
 
