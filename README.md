@@ -123,11 +123,12 @@ ON e.department_id = d.id;`
 `SELECT COUNT(name),department_id  FROM employees GROUP BY department_id ORDER BY department_id DESC;`
 
 **Smart version:**
-`SELECT d.name, COUNT(e.id) AS employee_count
-FROM employees e
-JOIN departments d ON e.department_id = d.id
+`SELECT d.name AS department_name, COUNT(e.id) AS employee_count
+FROM departments d
+LEFT JOIN employees e ON e.department_id = d.id
 GROUP BY d.name
-ORDER BY d.name DESC;`
+ORDER BY d.name DESC;
+`
 
 ---
 
@@ -351,6 +352,12 @@ ORDER BY s.effective_date DESC;`
 3️⃣8️⃣ **Question**: List all employees along with department name and their salary history.
 *Tips*: Multiple `JOIN`s.
 
+SELECT e.name, s.effective_date
+FROM employees e
+JOIN salaries s
+ON e.department_id = s.employee_id;
+GROUP BY e.name
+ORDER BY s.effective_date DESC;`
 ---
 
 ### ✅ Index Usage
