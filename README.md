@@ -342,6 +342,12 @@ ON e.department_id = s.employee_id;
 3️⃣7️⃣ **Question**: Display each employee’s salary history.
 *Tips*: Use `JOIN`, order by date.
 
+SELECT e.name, s.effective_date
+FROM employees e
+JOIN salaries s
+ON e.department_id = s.employee_id;
+ORDER BY s.effective_date DESC;`
+
 3️⃣8️⃣ **Question**: List all employees along with department name and their salary history.
 *Tips*: Multiple `JOIN`s.
 
