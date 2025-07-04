@@ -256,15 +256,25 @@ INSERT INTO salaries (employee_id, amount, effective_date) VALUES
 ## 💡 6️⃣ SQL Tips and Hints
 
 ✅ Use `JOIN` to combine tables.
+
 ✅ Use `WHERE` to filter rows.
+
 ✅ Use `ORDER BY salary DESC` to sort.
+
 ✅ Use `DISTINCT` for unique values.
+
 ✅ Use aggregate functions like `AVG()`, `SUM()`, `COUNT()`.
+
 ✅ Combine `GROUP BY` with aggregates.
+
 ✅ Use `HAVING` to filter after grouping.
+
 ✅ Use subqueries in `WHERE`.
+
 ✅ Use window functions like `RANK() OVER`.
+
 ✅ Check existing indexes with `\di` in psql.
+
 
 ---
 
