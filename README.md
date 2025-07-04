@@ -96,17 +96,31 @@ CREATE INDEX idx_departments_name_hash ON departments USING HASH (name);`
 1️⃣ **Question**: Show all employee details with their department name.
 *Tips*: Use `JOIN`.
 
+SELECT e.id, e.name, e.department_id, e.salary, d.name AS department_name
+FROM employees e
+JOIN departments d
+ON e.department_id = d.id;
+
 2️⃣ **Question**: List only the names and salaries of all employees.
 *Tips*: Use `SELECT`, choose specific columns.
+
+SELECT name, salary FROM employees;
 
 3️⃣ **Question**: List all unique department names.
 *Tips*: Use `DISTINCT`.
 
+SELECT DISTINCT name FROM departments;
+
 4️⃣ **Question**: Count the total number of employees.
 *Tips*: Use `COUNT()`.
 
+SELECT COUNT(name) FROM employees;
+
+
 5️⃣ **Question**: Count how many employees work in each department.
 *Tips*: Use `GROUP BY`, `COUNT()`.
+
+SELECT COUNT(name),department_id  FROM employees GROUP BY department_id ORDER BY DESC;
 
 ---
 
@@ -115,17 +129,40 @@ CREATE INDEX idx_departments_name_hash ON departments USING HASH (name);`
 6️⃣ **Question**: Find employees with a salary greater than 60,000.
 *Tips*: Use `WHERE`.
 
+SELECT * FROM employees WHERE salary > 60000;
+
 7️⃣ **Question**: List all employees in the Sales department.
 *Tips*: Use `JOIN` and `WHERE`.
+
+SELECT e.id, e.name, e.department_id, e.salary, d.id AS department_id, d.name AS department_name
+FROM employees e
+JOIN departments d
+ON e.department_id = d.id
+WHERE d.name = 'Sales';
+
 
 8️⃣ **Question**: Show employees who work in HR or Sales.
 *Tips*: Use `WHERE ... IN (...)`.
 
+SELECT e.id, e.name, e.department_id, e.salary, d.id AS department_id, d.name AS department_name
+FROM employees e
+JOIN departments d
+ON e.department_id = d.id
+WHERE d.name = 'Sales' OR d.name = 'HR';
+
 9️⃣ **Question**: Find employees not working in HR.
 *Tips*: Use `WHERE ... !=`.
 
+SELECT e.id, e.name, e.department_id, e.salary, d.id AS department_id, d.name AS department_name
+FROM employees e
+JOIN departments d
+ON e.department_id = d.id
+WHERE d.name != 'HR';
+
 🔟 **Question**: List employees with salaries between 50,000 and 70,000.
 *Tips*: Use `BETWEEN`.
+
+SELECT * FROM employees WHERE salary BETWEEN 50000 AND 70000;
 
 ---
 
