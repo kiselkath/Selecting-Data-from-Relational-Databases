@@ -1,261 +1,215 @@
-# 📘 SQL Practice: Relational Modeling, SELECT Queries, Foreign Keys, Indexes
+## 🧭 5️⃣ Practice Questions (50 Tasks)
 
-Welcome! In this assignment you will practice **relational modeling** and **SELECT queries** in PostgreSQL.  
-You'll use the [Crunchy Data Playground](https://www.crunchydata.com/developers/playground) to write and test your SQL.
+Each task below has:
 
----
+✅ **Question**: A clear, plain-English data question.
+✅ **Tips and hints**: Suggested SQL clauses or functions to use.
 
-## 🎯 Goal
-
-Practice:
-
-✅ Creating related tables with foreign keys  
-✅ Adding sample data  
-✅ Creating indexes (B-Tree, Hash)  
-✅ Writing SELECT queries using:
-- SELECT
-- WHERE
-- ORDER BY
-- Aggregate functions
-- GROUP BY, HAVING
-- Subqueries
-- Window functions
+Work through them in order, or choose any that interest you!
 
 ---
-
-## 🗂️ 1️⃣ Table Schema
-
-We will work with **HR Services** data modeling employees, departments, and salaries.
-
-### 🗄️ Tables
-
-#### 🧩 departments
-| Column       | Type    | Example        |
-|--------------|---------|----------------|
-| id           | SERIAL  | 1              |
-| name         | TEXT    | 'Engineering'  |
-
----
-
-#### 🧩 employees
-| Column       | Type    | Example        |
-|--------------|---------|----------------|
-| id           | SERIAL  | 1              |
-| name         | TEXT    | 'Alice'        |
-| department_id| INT     | 1 (FK)         |
-| salary       | NUMERIC | 70000.00       |
-
----
-
-#### 🧩 salaries
-| Column       | Type    | Example        |
-|--------------|---------|----------------|
-| id           | SERIAL  | 1              |
-| employee_id  | INT     | 1 (FK)         |
-| amount       | NUMERIC | 70000.00       |
-| effective_date | DATE  | '2024-01-01'   |
-
----
-
-## 🌱 2️⃣ Setup: Create Tables with Foreign Keys
-
-### ▶️ 2.1 Create Departments Table
-
-```sql
-CREATE TABLE departments (
-  id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL UNIQUE
-);
-````
-
----
-
-### ▶️ 2.2 Create Employees Table with Foreign Key
-
-```sql
-CREATE TABLE employees (
-  id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL,
-  department_id INT REFERENCES departments(id),
-  salary NUMERIC NOT NULL
-);
-```
-
----
-
-### ▶️ 2.3 Create Salaries Table with Foreign Key
-
-```sql
-CREATE TABLE salaries (
-  id SERIAL PRIMARY KEY,
-  employee_id INT REFERENCES employees(id),
-  amount NUMERIC NOT NULL,
-  effective_date DATE NOT NULL
-);
-```
-
----
-
-## 🏗️ 3️⃣ Add Indexes
-
-✅ B-Tree index (default for PK) is created automatically.
-✅ Add additional indexes:
-
-```sql
--- B-Tree index on salary for employees
-CREATE INDEX idx_employees_salary ON employees (salary);
-
--- Hash index on department name
-CREATE INDEX idx_departments_name_hash ON departments USING HASH (name);
-```
-
----
-
-## 🍀 4️⃣ Insert Sample Data
-
-### Departments
-
-```sql
-INSERT INTO departments (name) VALUES
-  ('HR'),
-  ('Engineering'),
-  ('Sales'),
-  ('Marketing');
-```
-
----
-
-### Employees
-
-```sql
-INSERT INTO employees (name, department_id, salary) VALUES
-  ('Alice', 1, 55000),
-  ('Bob', 2, 75000),
-  ('Charlie', 2, 72000),
-  ('Diana', 3, 60000),
-  ('Eve', 1, 58000),
-  ('Frank', 3, 64000),
-  ('Grace', 2, 80000),
-  ('Heidi', 4, 52000),
-  ('Ivan', 4, 54000),
-  ('Judy', 1, 50000);
-```
-
----
-
-### Salaries
-
-```sql
-INSERT INTO salaries (employee_id, amount, effective_date) VALUES
-  (1, 55000, '2024-01-01'),
-  (2, 75000, '2024-01-01'),
-  (3, 72000, '2024-01-01'),
-  (4, 60000, '2024-01-01'),
-  (5, 58000, '2024-01-01'),
-  (6, 64000, '2024-01-01'),
-  (7, 80000, '2024-01-01'),
-  (8, 52000, '2024-01-01'),
-  (9, 54000, '2024-01-01'),
-  (10, 50000, '2024-01-01');
-```
-
----
-
-## 🧭 5️⃣ Practice Questions
 
 ### ✅ SELECT Basics
 
-1️⃣ Show all employees with their department name.
-2️⃣ Show only `name` and `salary` of all employees.
-3️⃣ List all distinct department names.
-4️⃣ Count all employees.
-5️⃣ Count employees per department.
+1️⃣ **Question**: Show all employee details with their department name.
+*Tips*: Use `JOIN`.
+
+2️⃣ **Question**: List only the names and salaries of all employees.
+*Tips*: Use `SELECT`, choose specific columns.
+
+3️⃣ **Question**: List all unique department names.
+*Tips*: Use `DISTINCT`.
+
+4️⃣ **Question**: Count the total number of employees.
+*Tips*: Use `COUNT()`.
+
+5️⃣ **Question**: Count how many employees work in each department.
+*Tips*: Use `GROUP BY`, `COUNT()`.
 
 ---
 
 ### ✅ Filtering with WHERE
 
-6️⃣ Employees with salary > 60000.
-7️⃣ Employees in Sales department.
-8️⃣ Employees in HR or Sales.
-9️⃣ Employees not in HR.
-🔟 Employees with salary between 50000 and 70000.
+6️⃣ **Question**: Find employees with a salary greater than 60,000.
+*Tips*: Use `WHERE`.
+
+7️⃣ **Question**: List all employees in the Sales department.
+*Tips*: Use `JOIN` and `WHERE`.
+
+8️⃣ **Question**: Show employees who work in HR or Sales.
+*Tips*: Use `WHERE ... IN (...)`.
+
+9️⃣ **Question**: Find employees not working in HR.
+*Tips*: Use `WHERE ... !=`.
+
+🔟 **Question**: List employees with salaries between 50,000 and 70,000.
+*Tips*: Use `BETWEEN`.
 
 ---
 
 ### ✅ Sorting
 
-1️⃣1️⃣ Employees sorted by salary (lowest to highest).
-1️⃣2️⃣ Employees sorted by department and salary descending.
-1️⃣3️⃣ Top 3 highest-paid employees.
+1️⃣1️⃣ **Question**: Show employees sorted by salary from lowest to highest.
+*Tips*: Use `ORDER BY salary ASC`.
+
+1️⃣2️⃣ **Question**: List employees sorted by department and then by salary descending.
+*Tips*: Use `ORDER BY`.
+
+1️⃣3️⃣ **Question**: Find the top 3 highest-paid employees.
+*Tips*: Use `ORDER BY`, `LIMIT`.
 
 ---
 
 ### ✅ Aggregates
 
-1️⃣4️⃣ Average salary of all employees.
-1️⃣5️⃣ Total salary cost.
-1️⃣6️⃣ Number of employees per department.
-1️⃣7️⃣ Average salary per department.
-1️⃣8️⃣ Highest salary per department.
+1️⃣4️⃣ **Question**: Calculate the average salary of all employees.
+*Tips*: Use `AVG()`.
+
+1️⃣5️⃣ **Question**: Compute the total salary cost for all employees.
+*Tips*: Use `SUM()`.
+
+1️⃣6️⃣ **Question**: Count the number of employees in each department.
+*Tips*: Use `GROUP BY`, `COUNT()`.
+
+1️⃣7️⃣ **Question**: Calculate the average salary in each department.
+*Tips*: Use `GROUP BY`, `AVG()`.
+
+1️⃣8️⃣ **Question**: Find the highest salary in each department.
+*Tips*: Use `GROUP BY`, `MAX()`.
 
 ---
 
 ### ✅ GROUP BY + HAVING
 
-1️⃣9️⃣ Departments with more than 2 employees.
-2️⃣0️⃣ Departments with avg salary > 60000.
-2️⃣1️⃣ Departments with total salary cost > 150000.
+1️⃣9️⃣ **Question**: List departments that have more than 2 employees.
+*Tips*: Use `GROUP BY`, `HAVING COUNT()`.
+
+2️⃣0️⃣ **Question**: Show departments with an average salary above 60,000.
+*Tips*: Use `GROUP BY`, `HAVING AVG()`.
+
+2️⃣1️⃣ **Question**: Find departments with a total salary cost greater than 150,000.
+*Tips*: Use `GROUP BY`, `HAVING SUM()`.
 
 ---
 
 ### ✅ Subqueries
 
-2️⃣2️⃣ Employees above overall avg salary.
-2️⃣3️⃣ Employees earning above department average.
-2️⃣4️⃣ Departments with at least one employee > 80000.
-2️⃣5️⃣ Top earner in each department.
+2️⃣2️⃣ **Question**: Find employees earning above the overall average salary.
+*Tips*: Use subquery in `WHERE`.
+
+2️⃣3️⃣ **Question**: List employees earning above their department’s average salary.
+*Tips*: Use correlated subquery.
+
+2️⃣4️⃣ **Question**: Find departments with at least one employee earning over 80,000.
+*Tips*: Use `EXISTS` or `IN`.
+
+2️⃣5️⃣ **Question**: Get the top earner in each department.
+*Tips*: Use subquery with `MAX()` or window functions.
 
 ---
 
 ### ✅ Window Functions
 
-2️⃣6️⃣ Employees with rank in department by salary.
-2️⃣7️⃣ Dense rank of salary within department.
-2️⃣8️⃣ Running total of salary ordered by salary.
-2️⃣9️⃣ For each employee, show avg salary in their department.
+2️⃣6️⃣ **Question**: Show each employee with their rank in their department by salary.
+*Tips*: Use `RANK() OVER (PARTITION BY ...)`.
+
+2️⃣7️⃣ **Question**: Assign dense rank of salary within each department.
+*Tips*: Use `DENSE_RANK()`.
+
+2️⃣8️⃣ **Question**: Calculate the running total of salaries ordered by salary.
+*Tips*: Use `SUM() OVER (ORDER BY salary)`.
+
+2️⃣9️⃣ **Question**: For each employee, show the average salary in their department.
+*Tips*: Use `AVG() OVER (PARTITION BY ...)`.
 
 ---
 
 ### ✅ Challenge Queries
 
-3️⃣0️⃣ Engineering employees earning above Engineering average.
-3️⃣1️⃣ Each employee with difference from department avg.
-3️⃣2️⃣ Top 2 earners in each department.
-3️⃣3️⃣ Department with highest avg salary.
-3️⃣4️⃣ Employees with same salary as someone in a different department.
+3️⃣0️⃣ **Question**: List Engineering employees earning above the Engineering department average.
+*Tips*: Use subquery or window function.
+
+3️⃣1️⃣ **Question**: Show each employee with the difference between their salary and their department’s average.
+*Tips*: Use window function with `AVG()`.
+
+3️⃣2️⃣ **Question**: Find the top 2 earners in each department.
+*Tips*: Use `ROW_NUMBER()` or `RANK()`.
+
+3️⃣3️⃣ **Question**: Identify the department with the highest average salary.
+*Tips*: Use `ORDER BY` on `AVG()`.
+
+3️⃣4️⃣ **Question**: List employees who have the same salary as someone in a different department.
+*Tips*: Use self-join.
 
 ---
 
 ### ✅ Foreign Keys and Joins
 
-3️⃣5️⃣ List all employees with department name using JOIN.
-3️⃣6️⃣ List all salaries with employee names.
-3️⃣7️⃣ List employees and their salary history.
+3️⃣5️⃣ **Question**: List all employees with their department names using a JOIN.
+*Tips*: Use `INNER JOIN`.
+
+3️⃣6️⃣ **Question**: Show all salary records with the corresponding employee names.
+*Tips*: Use `JOIN`.
+
+3️⃣7️⃣ **Question**: Display each employee’s salary history.
+*Tips*: Use `JOIN`, order by date.
+
+3️⃣8️⃣ **Question**: List all employees along with department name and their salary history.
+*Tips*: Multiple `JOIN`s.
 
 ---
 
 ### ✅ Index Usage
 
-3️⃣8️⃣ Check which indexes exist.
-3️⃣9️⃣ Explain how query plan uses index on employees.salary.
-4️⃣0️⃣ Test hash index on departments.name with an equality filter.
+3️⃣9️⃣ **Question**: Check all indexes currently defined in the database.
+*Tips*: Use `\di` in psql or query `pg_indexes`.
+
+4️⃣0️⃣ **Question**: Explain how a query plan uses the index on employees.salary.
+*Tips*: Use `EXPLAIN ANALYZE`.
+
+4️⃣1️⃣ **Question**: Test the hash index on departments.name with an equality filter.
+*Tips*: Use `WHERE name = '...'`.
+
+---
+
+### ✅ Advanced Filters and Subqueries
+
+4️⃣2️⃣ **Question**: Show employees whose salary is in the top 10% of all salaries.
+*Tips*: Use percentile or subquery with `ORDER BY`, `LIMIT`.
+
+4️⃣3️⃣ **Question**: Find employees whose salary is below the department median salary.
+*Tips*: Use window functions or approximate median.
+
+4️⃣4️⃣ **Question**: List departments with no employees.
+*Tips*: Use `LEFT JOIN` and `WHERE ... IS NULL`.
+
+4️⃣5️⃣ **Question**: Show employees who have had multiple salary records (simulate history changes).
+*Tips*: Use `GROUP BY employee_id`, `HAVING COUNT() > 1`.
+
+---
+
+### ✅ Data Modification and Design
+
+4️⃣6️⃣ **Question**: Add a new department called 'Legal'.
+*Tips*: Use `INSERT`.
+
+4️⃣7️⃣ **Question**: Update Bob’s salary to 80,000.
+*Tips*: Use `UPDATE`.
+
+4️⃣8️⃣ **Question**: Delete an employee record by name.
+*Tips*: Use `DELETE`.
+
+4️⃣9️⃣ **Question**: Add an index on salaries.effective\_date.
+*Tips*: Use `CREATE INDEX`.
+
+5️⃣0️⃣ **Question**: Drop the salaries table.
+*Tips*: Use `DROP TABLE`.
 
 ---
 
 ## 💡 6️⃣ SQL Tips and Hints
 
-✅ Use `JOIN` to combine tables.
+✅ Use `JOIN` to combine related tables.
 
 ✅ Use `WHERE` to filter rows.
 
@@ -269,22 +223,14 @@ INSERT INTO salaries (employee_id, amount, effective_date) VALUES
 
 ✅ Use `HAVING` to filter after grouping.
 
-✅ Use subqueries in `WHERE`.
+✅ Use subqueries in `WHERE` or `FROM`.
 
 ✅ Use window functions like `RANK() OVER`.
 
 ✅ Check existing indexes with `\di` in psql.
 
+✅ Use `EXPLAIN` to see query plans.
 
----
-
-## 🔗 Resources
-
-* 📌 **PostgreSQL Tutorial Home**
-  [https://www.w3schools.com/postgresql/index.php](https://www.w3schools.com/postgresql/index.php)
-
-* 🌐 **Crunchy Data Playground**
-  [https://www.crunchydata.com/developers/playground](https://www.crunchydata.com/developers/playground)
 
 ---
 
@@ -299,4 +245,3 @@ INSERT INTO salaries (employee_id, amount, effective_date) VALUES
 ---
 
 Happy SQL hacking! 🧑‍💻🎯
-
