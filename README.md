@@ -2,9 +2,95 @@
 
 Each task below has:
 
-✅ **Question**: A clear, plain-English data question.
-✅ **Tips and hints**: Suggested SQL clauses or functions to use.
+* ✅ **Question**: A clear, plain-English data question.
+* ✅ **Tips and hints**: Suggested SQL clauses or functions to use.
 
+## Setup 
+### Start from scratch—including:
+* ✅ Creating the database
+* ✅ Connecting to it
+* ✅ Creating tables with foreign keys
+* ✅ Inserting the sample data
+
+Below is the complete set of starter SQL commands you can give them to copy and paste into PostgreSQL (psql, Crunchy Playground, or other UI).
+You can share this as “Initial Setup SQL” in Slack or add it to your assignment. 
+
+## **Initial Setup SQL**
+### 1️⃣ Create Database
+(Skip this step in Crunchy Playground—they give you a DB automatically. But if you’re on local Postgres, do this first!)
+`CREATE DATABASE hr_services;`
+`\c hr_services`
+### 2️⃣ Create Tables with Foreign Keys
+#### Departments Table
+`CREATE TABLE departments (
+id SERIAL PRIMARY KEY,
+name TEXT NOT NULL UNIQUE
+);`
+
+#### Employees Table
+`CREATE TABLE employees (
+id SERIAL PRIMARY KEY,
+name TEXT NOT NULL,
+department_id INT REFERENCES departments(id),
+salary NUMERIC NOT NULL
+);`
+
+#### Salaries Table
+
+`CREATE TABLE salaries (
+id SERIAL PRIMARY KEY,
+employee_id INT REFERENCES employees(id),
+amount NUMERIC NOT NULL,
+effective_date DATE NOT NULL
+);`
+### 3️⃣ Create Indexes
+`-- B-Tree index on employees.salary
+CREATE INDEX idx_employees_salary ON employees (salary);`
+
+`-- Hash index on departments.name
+CREATE INDEX idx_departments_name_hash ON departments USING HASH (name);`
+
+### 4️⃣ Insert Sample Data
+#### Departments
+
+`INSERT INTO departments (name) VALUES
+('HR'),
+('Engineering'),
+('Sales'),
+('Marketing');`
+
+#### Employees
+
+`INSERT INTO employees (name, department_id, salary) VALUES
+('Alice', 1, 55000),
+('Bob', 2, 75000),
+('Charlie', 2, 72000),
+('Diana', 3, 60000),
+('Eve', 1, 58000),
+('Frank', 3, 64000),
+('Grace', 2, 80000),
+('Heidi', 4, 52000),
+('Ivan', 4, 54000),
+('Judy', 1, 50000);`
+#### Salaries
+
+`INSERT INTO salaries (employee_id, amount, effective_date) VALUES
+(1, 55000, '2024-01-01'),
+(2, 75000, '2024-01-01'),
+(3, 72000, '2024-01-01'),
+(4, 60000, '2024-01-01'),
+(5, 58000, '2024-01-01'),
+(6, 64000, '2024-01-01'),
+(7, 80000, '2024-01-01'),
+(8, 52000, '2024-01-01'),
+(9, 54000, '2024-01-01'),
+(10, 50000, '2024-01-01');`
+
+### 6️⃣ Tips 💡
+* ✅ Run these commands in order.
+* ✅ Make sure you're connected to the right database before running CREATE TABLE.
+* ✅ If you’re using Crunchy Playground: skip CREATE DATABASE, but run the rest!
+* ✅ You only need to do this once to set up your data.
 
 ---
 
