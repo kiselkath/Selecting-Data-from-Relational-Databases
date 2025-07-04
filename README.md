@@ -96,32 +96,31 @@ CREATE INDEX idx_departments_name_hash ON departments USING HASH (name);`
 1️⃣ **Question**: Show all employee details with their department name.
 *Tips*: Use `JOIN`.
 
-SELECT e.id, e.name, e.department_id, e.salary, d.name AS department_name
+`SELECT e.id, e.name, e.department_id, e.salary, d.name AS department_name
 FROM employees e
 JOIN departments d
-ON e.department_id = d.id;
+ON e.department_id = d.id;`
 
 2️⃣ **Question**: List only the names and salaries of all employees.
 *Tips*: Use `SELECT`, choose specific columns.
 
-SELECT name, salary FROM employees;
+`SELECT name, salary FROM employees;`
 
 3️⃣ **Question**: List all unique department names.
 *Tips*: Use `DISTINCT`.
 
-SELECT DISTINCT name FROM departments;
+`SELECT DISTINCT name FROM departments;`
 
 4️⃣ **Question**: Count the total number of employees.
 *Tips*: Use `COUNT()`.
 
-SELECT COUNT(name) FROM employees;
+`SELECT COUNT(name) FROM employees;`
 
 
 5️⃣ **Question**: Count how many employees work in each department.
 *Tips*: Use `GROUP BY`, `COUNT()`.
 
-SELECT COUNT(name),department_id  FROM employees GROUP BY department_id ORDER BY DESC;
-
+`SELECT COUNT(name),department_id  FROM employees GROUP BY department_id ORDER BY DESC;`
 ---
 
 ### ✅ Filtering with WHERE
@@ -129,40 +128,40 @@ SELECT COUNT(name),department_id  FROM employees GROUP BY department_id ORDER BY
 6️⃣ **Question**: Find employees with a salary greater than 60,000.
 *Tips*: Use `WHERE`.
 
-SELECT * FROM employees WHERE salary > 60000;
+`SELECT * FROM employees WHERE salary > 60000;`
 
 7️⃣ **Question**: List all employees in the Sales department.
 *Tips*: Use `JOIN` and `WHERE`.
 
-SELECT e.id, e.name, e.department_id, e.salary, d.id AS department_id, d.name AS department_name
+`SELECT e.id, e.name, e.department_id, e.salary, d.id AS department_id, d.name AS department_name
 FROM employees e
 JOIN departments d
 ON e.department_id = d.id
-WHERE d.name = 'Sales';
+WHERE d.name = 'Sales';`
 
 
 8️⃣ **Question**: Show employees who work in HR or Sales.
 *Tips*: Use `WHERE ... IN (...)`.
 
-SELECT e.id, e.name, e.department_id, e.salary, d.id AS department_id, d.name AS department_name
+`SELECT e.id, e.name, e.department_id, e.salary, d.id AS department_id, d.name AS department_name
 FROM employees e
 JOIN departments d
 ON e.department_id = d.id
-WHERE d.name = 'Sales' OR d.name = 'HR';
+WHERE d.name = 'Sales' OR d.name = 'HR';`
 
 9️⃣ **Question**: Find employees not working in HR.
 *Tips*: Use `WHERE ... !=`.
 
-SELECT e.id, e.name, e.department_id, e.salary, d.id AS department_id, d.name AS department_name
+`SELECT e.id, e.name, e.department_id, e.salary, d.id AS department_id, d.name AS department_name
 FROM employees e
 JOIN departments d
 ON e.department_id = d.id
-WHERE d.name != 'HR';
+WHERE d.name != 'HR';`
 
 🔟 **Question**: List employees with salaries between 50,000 and 70,000.
 *Tips*: Use `BETWEEN`.
 
-SELECT * FROM employees WHERE salary BETWEEN 50000 AND 70000;
+`SELECT * FROM employees WHERE salary BETWEEN 50000 AND 70000;`
 
 ---
 
@@ -171,10 +170,16 @@ SELECT * FROM employees WHERE salary BETWEEN 50000 AND 70000;
 1️⃣1️⃣ **Question**: Show employees sorted by salary from lowest to highest.
 *Tips*: Use `ORDER BY salary ASC`.
 
+`SELECT * FROM employees ORDER BY salary ASC;`
+
 1️⃣2️⃣ **Question**: List employees sorted by department and then by salary descending.
 *Tips*: Use `ORDER BY`.
 
-1️⃣3️⃣ **Question**: Find the top 3 highest-paid employees.
+`SELECT * FROM employees ORDER BY department_id, salary DESC;`
+
+1️⃣3️⃣ **Question**: SELECT id, name, salary
+`FROM employees ORDER BY salary DESC LIMIT 3;`
+
 *Tips*: Use `ORDER BY`, `LIMIT`.
 
 ---
@@ -184,17 +189,43 @@ SELECT * FROM employees WHERE salary BETWEEN 50000 AND 70000;
 1️⃣4️⃣ **Question**: Calculate the average salary of all employees.
 *Tips*: Use `AVG()`.
 
+`SELECT AVG(salary) FROM employees;`
+
 1️⃣5️⃣ **Question**: Compute the total salary cost for all employees.
 *Tips*: Use `SUM()`.
+
+`SELECT SUM(salary) FROM employees;`
 
 1️⃣6️⃣ **Question**: Count the number of employees in each department.
 *Tips*: Use `GROUP BY`, `COUNT()`.
 
+SELECT COUNT(name) FROM employees GROUP BY department_id;
+
+smart version:
+
+`SELECT d.name AS department_name, COUNT(e.id) AS employee_count
+FROM employees e
+JOIN departments d ON e.department_id = d.id
+GROUP BY d.name;`
+
+
 1️⃣7️⃣ **Question**: Calculate the average salary in each department.
 *Tips*: Use `GROUP BY`, `AVG()`.
 
+`SELECT d.name AS department_name, AVG(e.salary) AS average_salary
+FROM employees e
+JOIN departments d ON e.department_id = d.id
+GROUP BY d.name;`
+
+
 1️⃣8️⃣ **Question**: Find the highest salary in each department.
 *Tips*: Use `GROUP BY`, `MAX()`.
+
+`SELECT d.name AS department_name, MAX(e.salary) AS average_salary
+FROM employees e
+JOIN departments d ON e.department_id = d.id
+GROUP BY d.name;`
+
 
 ---
 
