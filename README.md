@@ -242,6 +242,13 @@ GROUP BY d.name;`
 1️⃣9️⃣ **Question**: List departments that have more than 2 employees.
 *Tips*: Use `GROUP BY`, `HAVING COUNT()`.
 
+SELECT COUNT(e.id) AS employee_count, d.name AS department_name
+FROM employees e
+JOIN departments d
+ON e.department_id = d.id
+GROUP BY department_name
+HAVING COUNT(e.id) > 2;
+
 2️⃣0️⃣ **Question**: Show departments with an average salary above 60,000.
 *Tips*: Use `GROUP BY`, `HAVING AVG()`.
 
