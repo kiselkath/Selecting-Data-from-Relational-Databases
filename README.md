@@ -326,6 +326,11 @@ HAVING SUM(e.salary) > 150000;`
 3️⃣5️⃣ **Question**: List all employees with their department names using a JOIN.
 *Tips*: Use `INNER JOIN`.
 
+SELECT e.name, d.name AS department_name
+FROM employees e 
+INNER JOIN departments d 
+ON e.department_id = d.id;
+
 3️⃣6️⃣ **Question**: Show all salary records with the corresponding employee names.
 *Tips*: Use `JOIN`.
 
