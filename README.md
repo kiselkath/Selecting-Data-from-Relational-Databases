@@ -335,15 +335,15 @@ ON e.department_id = d.id;
 3️⃣6️⃣ **Question**: Show all salary records with the corresponding employee names.
 *Tips*: Use `JOIN`.
 
-SELECT e.name, s.amount
+`SELECT e.name, s.amount
 FROM employees e
 JOIN salaries s
-ON e.department_id = s.employee_id;
+ON e.department_id = s.employee_id;`
 
 3️⃣7️⃣ **Question**: Display each employee’s salary history.
 *Tips*: Use `JOIN`, order by date.
 
-SELECT e.name, s.effective_date
+`SELECT e.name, s.effective_date
 FROM employees e
 JOIN salaries s
 ON e.department_id = s.employee_id;
@@ -352,12 +352,16 @@ ORDER BY s.effective_date DESC;`
 3️⃣8️⃣ **Question**: List all employees along with department name and their salary history.
 *Tips*: Multiple `JOIN`s.
 
-SELECT e.name, s.effective_date
-FROM employees e
-JOIN salaries s
-ON e.department_id = s.employee_id;
-GROUP BY e.name
-ORDER BY s.effective_date DESC;`
+SELECT 
+    e.id AS employee_id,
+    e.name,
+    d.name AS department_name,
+    s.effective_date AS salary_history,
+    s.amount AS salary_amount
+FROM employees e 
+JOIN salaries s ON e.department_id = s.employee_id
+JOIN departments d ON e.department_id = d.id;
+
 ---
 
 ### ✅ Index Usage
