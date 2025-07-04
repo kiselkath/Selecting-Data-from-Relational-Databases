@@ -11,9 +11,6 @@ Each task below has:
 * ✅ Connecting to it
 * ✅ Creating tables with foreign keys
 * ✅ Inserting the sample data
-
-Below is the complete set of starter SQL commands you can give them to copy and paste into PostgreSQL (psql, Crunchy Playground, or other UI).
-You can share this as “Initial Setup SQL” in Slack or add it to your assignment. 
 ---
 ## **Initial Setup SQL**
 ### 1️⃣ Create Database
