@@ -5,7 +5,6 @@ Each task below has:
 ✅ **Question**: A clear, plain-English data question.
 ✅ **Tips and hints**: Suggested SQL clauses or functions to use.
 
-Work through them in order, or choose any that interest you!
 
 ---
 
