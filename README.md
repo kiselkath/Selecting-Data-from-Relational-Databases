@@ -334,6 +334,11 @@ ON e.department_id = d.id;
 3️⃣6️⃣ **Question**: Show all salary records with the corresponding employee names.
 *Tips*: Use `JOIN`.
 
+SELECT e.name, s.amount
+FROM employees e
+JOIN salaries s
+ON e.department_id = s.employee_id;
+
 3️⃣7️⃣ **Question**: Display each employee’s salary history.
 *Tips*: Use `JOIN`, order by date.
 
