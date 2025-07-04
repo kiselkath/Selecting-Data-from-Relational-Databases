@@ -1,10 +1,10 @@
-## 🧭 5️⃣ Practice Questions (50 Tasks)
+## 🧭 Practice Questions (50 Tasks)
 
 Each task below has:
 
 * ✅ **Question**: A clear, plain-English data question.
 * ✅ **Tips and hints**: Suggested SQL clauses or functions to use.
-
+---
 ## Setup 
 ### Start from scratch—including:
 * ✅ Creating the database
@@ -14,7 +14,7 @@ Each task below has:
 
 Below is the complete set of starter SQL commands you can give them to copy and paste into PostgreSQL (psql, Crunchy Playground, or other UI).
 You can share this as “Initial Setup SQL” in Slack or add it to your assignment. 
-
+---
 ## **Initial Setup SQL**
 ### 1️⃣ Create Database
 (Skip this step in Crunchy Playground—they give you a DB automatically. But if you’re on local Postgres, do this first!)
