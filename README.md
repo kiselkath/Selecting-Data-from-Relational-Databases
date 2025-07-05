@@ -328,6 +328,24 @@ WHERE (e.department_id, e.salary) IN (
 2️⃣6️⃣ **Question**: Show each employee with their rank in their department by salary.
 *Tips*: Use `RANK() OVER (PARTITION BY ...)`.
 
+**SYNTAX**
+`RANK() OVER (
+PARTITION BY <группа>
+ORDER BY <порядок>
+)`
+
+Answer:
+
+`SELECT e.name, e.salary, d.name AS department_name,
+RANK() OVER (
+PARTITION BY e.department_id
+ORDER BY e.salary DESC
+) AS rank_in_department
+FROM employees e
+JOIN departments d ON e.department_id = d.id
+ORDER BY rank_in_department;`
+
+
 2️⃣7️⃣ **Question**: Assign dense rank of salary within each department.
 *Tips*: Use `DENSE_RANK()`.
 
